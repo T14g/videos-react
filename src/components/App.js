@@ -2,39 +2,56 @@ import React from 'react';
 import SearchBar from './SearchBar';
 import youtube from '../apis/youtube';
 import VideoList from './VideoList';
+import VideoDetail from './VideoDetail';
 
 class App extends React.Component{
 
     state = { videos: [], selectedVideo: null }
 
-    //Callback when submit the form
-    //Search is a endpoint of API lol
-    //Assync usa promisse ou assync way syntax
-    //assync await
+
+    // /search is a endpoint of Youtube API lol
+    //This function is passed to SearchBar via props
+    //Then fired when you search for something
     onTermSubmit = async (term) => {
 
-        //Youtube is a instance of axios you imported it above lol
+        //Youtube is a instance of axios you imported 
         const response = await youtube.get('/search',{
             params: {
                 q: term
             }
         });
 
+        //After getting async response...
 
-        //Só vai setar quando receber a resposta por ser async
-        this.setState({ videos : response.data.items })
+        //Default selectedVideo : response.data.items[0] 
+        //sets the first video of response on screen
+        this.setState({ 
+            videos : response.data.items,
+            selectedVideo : response.data.items[0] 
+        })
     };
 
-    //Callback on video selected, disparado quando selecionar um video no VideoList
+    //Will be passed via props -> videoList
     onVideoSelect = video => {
         console.log('From the app!', video);
+        this.setState({ selectedVideo : video});
     }
 
     render(){
         return(
             <div className="ui container">
                 <SearchBar onFormSubmit={this.onTermSubmit} />
-                <VideoList onVideoSelect={this.onVideoSelect} videos={this.state.videos} />
+                <div className="ui grid">
+                    <div className="ui row">
+                        <div className="eleven wide column">
+                            <VideoDetail video={this.state.selectedVideo} />
+                        </div>
+
+                        <div className="five wide column">
+                            <VideoList onVideoSelect={this.onVideoSelect} videos={this.state.videos} />
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }

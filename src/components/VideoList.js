@@ -5,14 +5,14 @@ import VideoItem from './VideoItem';
 //({videos}) ES6 desestructuring 
 const VideoList = ({videos, onVideoSelect }) => {
 
-    // Run 1x para cada objeto do array 
-    //Retorna um Vídeo Item para cada e salva tudo nessa constante
-    //Passar a função onVideoSelect que veio do APP->VideoList->VideoItem
+    // Run 1x for each video
+    //Returns all video itens and saves on renderedList
+    //Passing the function onVideoSelect from APP->VideoList->VideoItem
     const renderedList = videos.map((video) => {
-        return <VideoItem onVideoSelect={onVideoSelect} video={video} />
+        return <VideoItem onVideoSelect={onVideoSelect} video={video} key={video.id.videoId} />
     });
 
-    // E a constante é chamada na tela dando render no HTML 
+    //And renderedList is returned rendering all the stuff
     return <div className="ui relaxed divided list">{renderedList}</div>;
 }
 

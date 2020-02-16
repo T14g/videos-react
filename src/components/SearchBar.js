@@ -1,11 +1,11 @@
 import React from 'react';
 
-//Input controlado salva os dados no componente e não no DOM 
-//No caso no State do componente
+//Controlled components save input data on itself
+//Uncontrolled saves on DOM , in this case on state
 
-//Ao preencher o input setState
-//Ao enviar o form disparar uma função de FLAG
-//event.preventDefault(); << estava atrás disso
+
+//When typying on input you call onInputChange and sets the state
+//event.preventDefault(); << Was looking for that for other reasons...
 
 class SearchBar extends React.Component {
     state = { term: ''};
@@ -14,21 +14,21 @@ class SearchBar extends React.Component {
         this.setState({ term : event.target.value});
     }
 
+
+    //When you submit the form
     onFormSubmit = event =>{
         event.preventDefault();
 
-        //Chamando a função que foi passada nos props com o term que foi passado aqui
+        //this function comes via props from App
         this.props.onFormSubmit(this.state.term);
     }
-
-    //Make sure que você chamará o callback do parent 
 
     render() {
         return(
             <div className="search-bar ui segment">
                 <form onSubmit={this.onFormSubmit} className="ui form">
                     <div className="field">
-                        <label >Video Search</label>
+                        <label >Digite algo para buscar vídeos no YouTube</label>
                         <input type="text" value={this.state.term} 
                         onChange={this.onInputChange} />
                     </div>

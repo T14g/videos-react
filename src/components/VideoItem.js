@@ -1,9 +1,8 @@
 import './VideoItem.css';
 import React from 'react';
 
-//Arrow function para poder passar o video em parâmetro na onClick
-//Sem arrow function não passaria o video de parâmetro
-
+//Arrow function enables you to pass the video as a function parameter
+//otherwise you would be calling it without parameters
 
 const VideoItem = ({video, onVideoSelect }) =>{
     return (
